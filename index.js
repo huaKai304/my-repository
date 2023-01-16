@@ -21,7 +21,7 @@ function getUrlParams () {
   let url = window.location.href 
   let p = url.split('?')[1]
   let params = new URLSearchParams(p)
-  console.log(params.get('parasm'))
+  console.log('params', params.get('parasm'))
 }
 
 function main() {
