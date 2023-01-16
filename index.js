@@ -52,7 +52,6 @@ function main() {
     const ws = new WebSocket("ws://172.25.3.251:8765/sub");
     ws.addEventListener("message", (e) => {
         const [x, y, z] = JSON.parse(e.data);
-        console.log('x, y, z', x, y, z)
         camera.position.set(x, y, z);
     });
 }
