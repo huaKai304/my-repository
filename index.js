@@ -17,8 +17,16 @@ async function addFeatures(scene) {
         box.position.set(poi.x, 0, poi.z);
     }
 }
+function getUrlParams () {
+  // window.location.href 获取地址
+  let url = window.location.href 
+  let p = url.split('?')[1]
+  let params = new URLSearchParams(p)
+  console.log(params.get('parasm'))
+}
 
 function main() {
+    getUrlParams ();
     document.getElementById("req").remove();
     const canvas = document.getElementById("canvas1");
     const scene = new THREE.Scene();
