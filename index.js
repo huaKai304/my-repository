@@ -18,7 +18,6 @@ async function addFeatures(scene) {
     }
 }
 function getUrlParams () {
-  // window.location.href 获取地址
   let url = window.location.href 
   let p = url.split('?')[1]
   let params = new URLSearchParams(p)
