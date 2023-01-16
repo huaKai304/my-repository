@@ -19,7 +19,6 @@ async function addFeatures(scene) {
 }
 function getUrlParams () {
   let url = window.location.href
-  console.log('params', url.split('?')[1].split('=')[1])
   if (url.split('?')[1] && url.split('?')[1].split('=')[1]) {
     let item = url.split('?')[1].split('=')[1]
     item.split(';').forEach(it => {
