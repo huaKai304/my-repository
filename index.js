@@ -23,13 +23,12 @@ function getUrlParams () {
   if (url.split('?')[1] && url.split('?')[1].split('=')[1]) {
     let item = url.split('?')[1].split('=')[1]
     item.split(';').forEach(it => {
-      it.split(',').forEach(v => {
-        beacons.push({
-          major: v[0],
-          minor: v[1],
-          rssi: v[2]
-        })
-      })   
+      let v =it.split(',')
+      beacons.push({
+        major: v[0],
+        minor: v[1],
+        rssi: v[2]
+      })
     })
   }
   console.log('beacons', beacons)
