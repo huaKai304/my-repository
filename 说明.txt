@@ -1,0 +1,46 @@
+AR.js官方教程https://ar-js-org.github.io/AR.js-Docs/location-based-three/
+
+构建流程:
+1. npm install
+2. npm run build
+注意:
+调用移动传感器信息(DeviceMotionEvent, DeviceOrientationEvent等), 需要localhost, 或网站启用https, 或浏览器将指定地址添加到信任列表中
+所以建议找一台有域名并且启用https的服务器, 在上面部署页面
+
+AR.js的作用:
+1. 将实时摄像头画面显示出来, 将three.js的三维场景叠加在上面
+2. 手机旋转时, 处理传感器信息, 同步更新three.js里的摄像机(Camera)的旋转矩阵
+3. 如果使用GPS经纬度信息, AR.js会将经纬度转换为墨卡托投影下的绝对坐标, 然后再在three.js的三维场景中定位物体或摄像机;
+也可以不使用GPS, 自己直接通过three.js的API设置物体的三维坐标
+(目前我们也不打算使用GPS经纬度)
+
+AR.js+three.js的坐标系:
+X: 正方向为正东, 负方向为正西
+Y: 正方向为海拔增加的方向, 负方向为海拔减少的方向
+Z: 正方向为正南, 负方向为正北
+单位为米, 也就是X增加1对应往正东方向移动1米
+
+index.js:
+1. 获取poifake.json中的坐标, 然后直接通过three.js的API设置物体的三维坐标
+2. 将摄像机的位置写死在(-2.205, 0, 4.575), 浩宁的工位
+3. 根据canvas的实际宽度和高度调整宽高比(aspect)和视场角(fov)等参数, 更新摄像机投影矩阵
+
+一些坑:
+1. AR.js的bug: 代码中引用THREE.Math.degToRad报错, 应该批量替换成THREE.MathUtils.degToRad
+2. 苹果手机在调用移动传感器前需要调用DeviceMotionEvent.requestPermission申请权限, 并且requestPermission必须要放在用户交互的处理逻辑中(比如按钮点击事件), 如果放在window.onload等没有用户交互地方则无效
+3. 安卓手机获取手机旋转角度时(alpha, beta, gamma三个值, 可以近似认为alpha就是指南针方向), 获取到的是绝对的值, 是正常的
+苹果手机获取到的alpha值和启动瞬间的朝向有关, 启动瞬间的alpha为0
+需要修改./node_modules/@ar-js-org/ar.js/three.js/build/ar-threex-location-only.js中关于alpha的逻辑, 用另一个变量webkitCompassHeading代替alpha
+
+未解决的问题:
+1. AR.js+three.js绘制的摄像头画面可能会有变形的问题(可能是因为摄像头分辨率和显示分辨率不一致)
+已经有人提bug, 但未解决: https://github.com/AR-js-org/AR.js/issues/498
+
+2. 某台手机上测试时, 获取到的手机摄像头画面有"非常高的放大倍率"的问题, 而且无法调整放大倍率, 猜测是AR.js中请求打开摄像头时传入的参数有问题
+已经有人提bug, 但未解决: https://github.com/AR-js-org/AR.js/issues/215
+
+3. 三维场景中的物体和现实场景中的物体重合度不够, 或者说感觉三维场景中的1米看起来不像是现实中的1米
+可能和three.js摄像机的视场角(fov)参数有关, 可能和实际手机摄像头的参数(焦距等)有关
+
+4. 导航和路径规划需要用到BLE蓝牙信标信息, 目前各大浏览器只提供了实验性Javascript API(基本上就是不能用的意思)
+可能要用微信小程序的API获取蓝牙信标的信息
