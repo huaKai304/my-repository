@@ -19,12 +19,12 @@ async function addFeatures(scene) {
 }
 function getUrlParams () {
   let url = window.location.href
-  console.log('p', url)
+  console.log('params', url.split('?')[1].split('=')[0])
 }
 
 function main() {
-  console.log('window.location', window.location)
-  console.log('window.location.href', window.location.href)
+    console.log('window.location', window.location)
+    console.log('window.location.href', window.location.href)
     getUrlParams ();
     document.getElementById("req").remove();
     const canvas = document.getElementById("canvas1");
