@@ -19,8 +19,7 @@ async function addFeatures(scene) {
 }
 function getUrlParams () {
   let url = window.location.href 
-  let p = url.split('?')[1]
-  console.log('p', p)
+  console.log('p', url)
 }
 
 function main() {
