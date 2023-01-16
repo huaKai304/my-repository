@@ -20,8 +20,7 @@ async function addFeatures(scene) {
 function getUrlParams () {
   let url = window.location.href 
   let p = url.split('?')[1]
-  let params = new URLSearchParams(p)
-  console.log('params', params.get('parasm'))
+  console.log('p', p)
 }
 
 function main() {
