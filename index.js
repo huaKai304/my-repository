@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import * as THREEx from "./node_modules/@ar-js-org/ar.js/three.js/build/ar-threex-location-only.js";
-
+let beacons = []
 async function addFeatures(scene) {
     const resp = await fetch("poifake.json?t=" + Date.now());
     const data = await resp.json();
@@ -20,6 +20,19 @@ async function addFeatures(scene) {
 function getUrlParams () {
   let url = window.location.href
   console.log('params', url.split('?')[1].split('=')[1])
+  if (url.split('?')[1] && url.split('?')[1].split('=')[1]) {
+    let item = url.split('?')[1].split('=')[1]
+    item.split(';').forEach(it => {
+      it.split(',').forEach(v => {
+        beacons.push({
+          major: v[0],
+          minor: v[1],
+          rssi: v[2]
+        })
+      })   
+    })
+  }
+  console.log('beacons', beacons)
 }
 
 function main() {
