@@ -41,7 +41,7 @@ function main() {
             const verticalFov = Math.atan(Math.tan(horizontalFov / 2) / camera.aspect) * 2;
             camera.fov = verticalFov * 180 / Math.PI;
             camera.updateProjectionMatrix();
-            console.log(camera.fov);
+            console.log('fov', camera.fov);
         }
         deviceOrientationControls.update();
         webcam.update();
@@ -52,6 +52,7 @@ function main() {
     const ws = new WebSocket("ws://172.25.3.251:8765/sub");
     ws.addEventListener("message", (e) => {
         const [x, y, z] = JSON.parse(e.data);
+        console.log('x, y, z', x, y, z)
         camera.position.set(x, y, z);
     });
 }
