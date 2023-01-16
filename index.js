@@ -34,7 +34,7 @@ function getUrlParams () {
 }
 
 function main() {
-    getUrlParams ();
+    // getUrlParams ();
     document.getElementById("req").remove();
     const canvas = document.getElementById("canvas1");
     const scene = new THREE.Scene();
