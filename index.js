@@ -34,8 +34,6 @@ function getUrlParams () {
 }
 
 function main() {
-    console.log('window.location', window.location)
-    console.log('window.location.href', window.location.href)
     getUrlParams ();
     document.getElementById("req").remove();
     const canvas = document.getElementById("canvas1");
